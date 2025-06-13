@@ -1,16 +1,9 @@
-databases:
-  - name: expense_tracker_db
-    databaseName: expense_tracker_db
-    user: expense_tracker_user
-    plan: free
-
 services:
   - type: web
     name: expense_tracker_api
     env: python
     plan: free
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn --bind 0.0.0.0:$PORT app:app"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT src.main:app"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -18,3 +11,9 @@ services:
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
+
+databases:
+  - name: expense_tracker_db
+    databaseName: expense_tracker_db
+    user: expense_tracker_user
+    plan: free
